@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Shades of Spray</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Rubik:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --pink:#ff2ddc; --cyan:#00e5ff; --amazon:#FF9900; --dark:#080808; --dark2:#0e0e0e; --dark3:#141414; }
+html { scroll-behavior: smooth; }
+body { background-color:#080808; color:#ffffff; font-family:'Rubik',sans-serif; cursor:none; overflow-x:hidden; }
+#cur { position:fixed; width:10px; height:10px; border-radius:50%; background:#ff2ddc; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 6px #ff2ddc; }
+.rseg { position:fixed; pointer-events:none; z-index:9997; border-radius:999px; transform-origin:left center; animation:rfade 0.55s ease-out forwards; }
+@keyframes rfade { 0%{opacity:0.85;} 100%{opacity:0;} }
+nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:1.2rem 2.5rem; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(to bottom,rgba(8,8,8,0.97),transparent); }
+.nav-logo { font-family:'Bangers',cursive; font-size:1.3rem; letter-spacing:0.1em; background:linear-gradient(135deg,#ff2ddc,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-decoration:none; }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a { color:rgba(255,255,255,1.0); text-decoration:none; font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; transition:color 0.3s; }
+.nav-links a:hover { color:#00e5ff; }
+.nav-links .amz-link { color:#FF9900 !important; }
+.nav-links .amz-link:hover { color:#ffb347 !important; }
+#hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:relative; overflow:hidden; padding:2rem; background-color:#080808; }
+#hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 30% 60%,rgba(255,45,220,0.07) 0%,transparent 65%),radial-gradient(ellipse 60% 60% at 75% 35%,rgba(0,229,255,0.06) 0%,transparent 65%); pointer-events:none; }
+.hero-claim { font-family:'Rubik',sans-serif; font-weight:700; font-size:clamp(0.8rem,1.8vw,1rem); letter-spacing:0.4em; text-transform:uppercase; color:#ffffff; margin-bottom:2rem; position:relative; z-index:1; }
+.hero-title { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(3.8rem,13vw,10rem); line-height:0.93; letter-spacing:0.02em; background:linear-gradient(110deg,#ff2ddc 0%,#cc44ff 30%,#4d96ff 65%,#00e5ff 100%); background-size:200% 200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:nshift 5s ease-in-out infinite alternate; position:relative; z-index:1; margin-bottom:2.5rem; }
+@keyframes nshift { 0%{background-position:0% 50%;} 100%{background-position:100% 50%;} }
+.btn-amz { display:inline-flex; align-items:center; justify-content:center; padding:0.85rem 2rem; background-color:#0a0a0a; border:1px solid rgba(255,153,0,0.5); border-radius:4px; text-decoration:none; position:relative; z-index:1; transition:border-color 0.3s,box-shadow 0.3s; box-shadow:0 0 16px rgba(255,153,0,0.12); }
+.btn-amz:hover { border-color:#FF9900; box-shadow:0 0 28px rgba(255,153,0,0.35); }
+.amz-svg { height:28px; width:auto; display:block; }
+.scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:rgba(255,255,255,0.2); font-size:0.62rem; letter-spacing:0.35em; text-transform:uppercase; z-index:1; }
+.scroll-line { width:1px; height:36px; background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.25)); animation:spulse 2s ease-in-out infinite; }
+@keyframes spulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+#collections { background-color:#080808; padding:4rem 2rem 5rem; position:relative; }
+#collections::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,45,220,0.3),rgba(0,229,255,0.3),transparent); }
+.coll-inner { max-width:1200px; margin:0 auto; }
+.coll-label { font-size:0.68rem; letter-spacing:0.5em; text-transform:uppercase; color:rgba(255,255,255,0.35); text-align:center; margin-bottom:2rem; }
+.coll-grid { display:flex; flex-wrap:wrap; gap:1.2rem; }
+.ctile { flex:1 1 200px; min-width:180px; display:flex; flex-direction:column; padding:1.8rem 1.5rem; border:1px solid rgba(255,45,220,0.15); background-color:#141414; text-decoration:none; position:relative; overflow:hidden; transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s; cursor:none; }
+.ctile:hover { transform:translateY(-5px); border-color:rgba(255,45,220,0.5); box-shadow:0 10px 35px rgba(255,45,220,0.12); }
+.ctile-num { display:block; font-family:'Bangers',cursive; font-size:3rem; line-height:1; background:linear-gradient(135deg,#ff2ddc,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.6rem; }
+.ctile-name { display:block; font-weight:700; font-size:0.85rem; color:#ffffff; margin-bottom:0.35rem; line-height:1.3; }
+.ctile-desc { display:block; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.82rem; color:rgba(255,255,255,0.4); flex:1; }
+.ctile-arrow { display:block; margin-top:1.2rem; font-size:1rem; color:#ff2ddc; }
+.bsec { padding:6rem 2rem; position:relative; }
+.bsec::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,45,220,0.15),rgba(0,229,255,0.15),transparent); }
+.bsec-inner { max-width:1300px; margin:0 auto; }
+#s-spray { background-color:#0e0e0e; }
+#s-klug { background-color:#080808; }
+#s-bewert { background-color:#0e0e0e; }
+#s-burg { background-color:#080808; }
+.sec-eye { display:block; font-size:0.68rem; letter-spacing:0.5em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:0.4rem; }
+.sec-head { display:block; font-family:'Bangers',cursive; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:0.05em; background:linear-gradient(135deg,#ff2ddc,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.25rem; }
+.sec-claim { display:block; font-family:'Cormorant Garamond',serif; font-style:italic; color:rgba(255,255,255,0.45); font-size:1rem; }
+.ndiv { width:70px; height:2px; background:linear-gradient(90deg,#ff2ddc,#00e5ff); box-shadow:0 0 8px rgba(255,45,220,0.4); margin:1.2rem 0 3rem; }
+.bgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:1.2rem; }
+.bgrid-md { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); }
+.bgrid-lg { grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); }
+.bcard { position:relative; aspect-ratio:3/4; background-color:#141414; border:1px solid rgba(255,255,255,0.05); overflow:hidden; transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s; cursor:none; display:block; text-decoration:none; }
+.bcard:hover { transform:translateY(-6px) scale(1.03); border-color:rgba(255,45,220,0.35); box-shadow:0 8px 30px rgba(255,45,220,0.14); }
+.bcard img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; }
+.bcard:hover img { transform:scale(1.07); }
+.bcard-ov { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,transparent 55%); opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:0.8rem; }
+.bcard:hover .bcard-ov { opacity:1; }
+.bcard-ov span { font-size:0.72rem; color:rgba(255,255,255,0.85); font-style:italic; font-family:'Cormorant Garamond',serif; }
+.bcard::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#ff2ddc,#00e5ff); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+.bcard:hover::after { transform:scaleX(1); }
+.ph { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem; }
+.ph-n { font-family:'Bangers',cursive; font-size:2rem; color:#1e1e1e; }
+.ph-t { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:#1a1a1a; }
+footer { background-color:#080808; border-top:1px solid rgba(255,45,220,0.1); padding:4rem 2rem 3rem; text-align:center; }
+.ft-logo { font-family:'Bangers',cursive; font-size:2.4rem; letter-spacing:0.08em; background:linear-gradient(135deg,#ff2ddc,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block; margin-bottom:0.75rem; }
+.ft-claim { font-family:'Cormorant Garamond',serif; font-style:italic; color:rgba(255,255,255,1.0); font-size:0.95rem; display:block; margin-bottom:2rem; }
+.ft-amz { display:inline-flex; align-items:center; padding:0.65rem 1.6rem; border:1px solid rgba(255,153,0,0.35); border-radius:4px; text-decoration:none; transition:border-color 0.3s,box-shadow 0.3s; background-color:#080808; }
+.ft-amz:hover { border-color:#FF9900; box-shadow:0 0 14px rgba(255,153,0,0.25); }
+.ft-copy { display:block; margin-top:2.5rem; font-size:0.62rem; color:rgba(255,255,255,1.0); letter-spacing:0.2em; text-transform:uppercase; }
+.impressum { margin-top:2.5rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.05); font-size:0.7rem; color:rgba(255,255,255,1.0); line-height:1.9; letter-spacing:0.04em; }
+.imp-t { font-size:0.62rem; letter-spacing:0.35em; text-transform:uppercase; color:rgba(255,255,255,1.0); display:block; margin-bottom:0.4rem; }
+.fi { opacity:0; transform:translateY(22px); transition:opacity 0.7s,transform 0.7s; }
+.fi.on { opacity:1; transform:translateY(0); }
+/* Burg grid */
+#s-burg .burg-grid { display:flex; flex-direction:column; gap:1.5rem; }
+#s-burg .burg-row { display:flex; gap:1.2rem; justify-content:center; }
+#s-burg .burg-row.pilot .bcard { max-width:260px; width:100%; }
+#s-burg .burg-row.pair .bcard { flex:0 1 calc(50% - 0.6rem); max-width:300px; }
+/* Bewert grid */
+#s-bewert .bewert-grid { display:flex; flex-direction:column; gap:1.5rem; }
+#s-bewert .bewert-row { display:flex; gap:1.2rem; justify-content:center; }
+#s-bewert .bewert-row.solo .bcard { max-width:260px; width:100%; }
+#s-bewert .bewert-row.pair .bcard { flex:0 1 calc(50% - 0.6rem); max-width:300px; }
+@media(max-width:600px){
+  .nav-links { display:none; }
+  .bgrid { grid-template-columns:repeat(auto-fill,minmax(105px,1fr)); gap:0.8rem; }
+  .coll-grid { flex-wrap:wrap; }
+  .ctile { flex:1 1 140px; min-width:140px; }
+  #s-burg .burg-row.pair,#s-bewert .bewert-row.pair { gap:0.8rem; }
+  #s-burg .burg-row.pilot .bcard,#s-bewert .bewert-row.solo .bcard { max-width:180px; }
+}
+
+/* Klugscheißerei 4-col grid */
+#s-klug .klug-grid { display:flex; flex-direction:column; gap:1.2rem; }
+#s-klug .klug-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
+/* Burg 1-3-3 */
+#s-burg .burg-row.solo { justify-content:center; }
+#s-burg .burg-row.solo .bcard { max-width:220px; width:100%; }
+#s-burg .burg-row.tri { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+/* Bewert 4-4-3 */
+#s-bewert .bewert-row.quad { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
+#s-bewert .bewert-row.tri { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; max-width:75%; margin:0 auto; }
+@media(max-width:768px){
+  #s-klug .klug-row { grid-template-columns:repeat(2,1fr); }
+  #s-burg .burg-row.tri { grid-template-columns:repeat(2,1fr); }
+  #s-bewert .bewert-row.quad { grid-template-columns:repeat(2,1fr); }
+  #s-bewert .bewert-row.tri { grid-template-columns:repeat(2,1fr); max-width:100%; }
+}
+@media(max-width:480px){
+  #s-klug .klug-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">50 Shades of Spray</a>
+  <ul class="nav-links">
+    <li><a href="#s-spray">Coloring Books</a></li>
+    <li><a href="#s-klug">Klugscheißerei</a></li>
+    <li><a href="#s-bewert">Ratings</a></li>
+    <li><a href="#s-burg">Burg Königstein</a></li>
+    <li><a href="https://www.amazon.de/stores/Marcus-Venicius/author/B0G5BD22NG" target="_blank" class="amz-link">Amazon ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-claim">Color it, live it.</p>
+  <h1 class="hero-title">50 SHADES<br>OF SPRAY</h1>
+  <a href="https://www.amazon.de/stores/Marcus-Venicius/author/B0G5BD22NG" target="_blank" class="btn-amz" aria-label="Shop on Amazon">
+    <svg class="amz-svg" viewBox="0 0 603 185" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#FF9900">
+        <path d="M340 140c-30 18-74 28-112 28-53 0-101-20-137-52-3-2 0-5 3-3 40 23 89 37 140 37 34 0 72-7 107-22 5-2 9 3 4 6z"/>
+        <path d="M354 128c-4-5-27-2-37-1-3 0-4-2-1-4 18-13 47-9 51-5 4 4 0 32-18 46-3 2-5 1-4-2 4-10 12-29 9-34z"/>
+      </g>
+      <g fill="#FF9900">
+        <path d="M161 93H131c-2 0-3-2-3-4V15c0-2 1-4 3-4h29c2 0 3 2 3 4v16c7-14 18-22 34-22 16 0 26 8 33 22 8-14 20-22 36-22 11 0 23 4 30 13 8 10 6 25 6 38v73c0 2-1 4-3 4h-29c-2 0-3-2-3-4V63c0-14 2-36-15-36-16 0-17 21-17 36v60c0 2-1 4-3 4h-29c-2 0-3-2-3-4V63c0-14 2-36-15-36-17 0-16 22-16 36v60c0 2-1 4-3 4z"/>
+        <path d="M420 7c36 0 55 31 55 71 0 39-22 69-55 69-34 0-54-31-54-70 0-40 20-70 54-70zm0 26c-18 0-19 24-19 39s0 46 19 46c18 0 19-26 19-42 0-10 0-22-4-31-3-8-9-12-15-12z"/>
+        <path d="M514 93h-29c-2 0-3-2-3-4V15c0-2 1-4 3-4h27c2 0 3 2 3 4v17c7-15 17-24 34-24 12 0 23 4 29 16 6-12 17-16 29-16 9 0 19 4 25 13 7 8 6 22 6 33v75c0 2-1 4-3 4h-29c-2 0-3-2-3-4V62c0-14 2-35-15-35-15 0-17 21-17 35v60c0 2-1 4-3 4h-29c-2 0-3-2-3-4V62c0-14 2-35-15-35-17 0-16 21-16 35v60c0 2-1 4-3 4z"/>
+        <path d="M268 65c0 10 0 20-5 29-5 7-12 11-20 11-11 0-17-9-17-21 0-23 21-27 42-27v8zm29 70c-2 2-4 2-6 0-8-7-10-10-14-16-13 14-22 18-39 18-20 0-35-12-35-37 0-20 11-33 27-39 14-5 33-6 47-8v-3c0-7 1-14-3-19-4-4-10-6-16-6-11 0-20 5-22 16 0 2-2 4-4 3l-27-3c-2 0-4-2-3-4 6-32 34-41 60-41 13 0 31 4 41 14 13 11 12 27 12 44v40c0 12 5 18 10 24 2 2 2 4 0 5l-28 23z"/>
+        <path d="M51 65c0 10 0 20-5 29-5 7-12 11-20 11-11 0-17-9-17-21 0-23 21-27 42-27v8zm29 70c-2 2-4 2-6 0-8-7-10-10-14-16-13 14-22 18-40 18-20 0-34-12-34-37 0-20 10-33 27-39 13-5 33-6 47-8v-3c0-7 1-14-3-19-4-4-10-6-16-6-11 0-20 5-22 16 0 2-2 4-4 3L8 81c-2 0-4-2-3-4C11 45 39 36 65 36c13 0 31 4 41 14 13 11 12 27 12 44v40c0 12 5 18 10 24 2 2 2 4 0 5L100 163z"/>
+        <path d="M97 93H68c-2 0-3-2-3-4V15c0-2 1-3 3-3h27c2 0 3 1 3 3v17c6-15 18-24 33-24 12 0 21 4 27 14 6 10 5 26 5 38v73c0 2-1 4-3 4h-29c-2 0-3-2-3-4V62c0-14 1-35-16-35-6 0-11 4-15 10-4 7-4 16-4 25v61c0 2-1 4-3 4z"/>
+      </g>
+    </svg>
+  </a>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section id="collections">
+  <div class="coll-inner">
+    <p class="coll-label fi">Collections</p>
+    <div class="coll-grid fi">
+      <a href="#s-spray" class="ctile">
+        <span class="ctile-num">80</span>
+        <span class="ctile-name">50 Shades of Spray</span>
+        <span class="ctile-desc">Coloring Book Collection</span>
+        <span class="ctile-arrow">↓</span>
+      </a>
+      <a href="#s-klug" class="ctile">
+        <span class="ctile-num">20</span>
+        <span class="ctile-name">50 Shades of Klugscheißerei</span>
+        <span class="ctile-desc">Know-it-All Collection</span>
+        <span class="ctile-arrow">↓</span>
+      </a>
+      <a href="#s-bewert" class="ctile">
+        <span class="ctile-num">11</span>
+        <span class="ctile-name">Bewertungsbücher</span>
+        <span class="ctile-desc">Rating Book Collection</span>
+        <span class="ctile-arrow">↓</span>
+      </a>
+      <a href="#s-burg" class="ctile ctile-burg">
+        <span class="ctile-num">7</span>
+        <span class="ctile-name">Abenteuer auf Burg Königstein</span>
+        <span class="ctile-desc">Children's Book Series</span>
+        <span class="ctile-arrow">↓</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: Coloring Books (Platzhalter) -->
+<section class="bsec" id="s-spray">
+  <div class="bsec-inner">
+    <div class="fi">
+      <span class="sec-eye">Coloring Book Collection</span>
+      <span class="sec-head">50 Shades of Spray</span>
+      <span class="sec-claim">Color it, live it.</span>
+      <div class="ndiv"></div>
+    </div>
+    <div class="bgrid" id="g-spray"></div>
+  </div>
+</section>
+
+<!-- SECTION 2: Klugscheißerei -->
+<section class="bsec" id="s-klug">
+  <div class="bsec-inner">
+    <div class="fi">
+      <span class="sec-eye">Know-it-All Collection</span>
+      <span class="sec-head">50 Shades of Klugscheißerei</span>
+      <span class="sec-claim">Read it, live it.</span>
+      <div class="ndiv"></div>
+    </div>
+    <div class="klug-grid">
+<div class="klug-row fi"><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Fu%C3%9Fball-Toilette/dp/B0G394NL1P/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 1"><img src="bilder/Foto_02_01_26__16_21_41__17_.jpg" alt="50 Shades of Klugscheißerei Band 1" loading="lazy"><div class="bcard-ov"><span>Band 1</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Medizin-Toilette/dp/B0G3PFBV9W/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 2"><img src="bilder/Foto_04_12_25__03_15_05.jpg" alt="50 Shades of Klugscheißerei Band 2" loading="lazy"><div class="bcard-ov"><span>Band 2</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Bitcoin-Toilette/dp/B0G4JYV3VF/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 3"><img src="bilder/Foto_02_01_26__16_21_41__16_.jpg" alt="50 Shades of Klugscheißerei Band 3" loading="lazy"><div class="bcard-ov"><span>Band 3</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G3K65XSN/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 4"><img src="bilder/Foto_02_01_26__16_21_41__15_.jpg" alt="50 Shades of Klugscheißerei Band 4" loading="lazy"><div class="bcard-ov"><span>Band 4</span></div></a></div>
+<div class="klug-row fi"><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G5GG9X5D/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 5"><img src="bilder/Foto_02_01_26__16_21_41__17___1_.jpg" alt="50 Shades of Klugscheißerei Band 5" loading="lazy"><div class="bcard-ov"><span>Band 5</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Pflanzen-Toilette/dp/B0G4LSKPC5/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 6"><img src="bilder/Foto_02_01_26__16_21_41__13___1_.jpg" alt="50 Shades of Klugscheißerei Band 6" loading="lazy"><div class="bcard-ov"><span>Band 6</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Verkehr-Toilette/dp/B0G4GHMGTJ/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 7"><img src="bilder/Foto_02_01_26__16_21_41__12___1_.jpg" alt="50 Shades of Klugscheißerei Band 7" loading="lazy"><div class="bcard-ov"><span>Band 7</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Internet-Toilette/dp/B0G4R14N2L/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 8"><img src="bilder/Foto_02_01_26__16_21_41__12_.jpg" alt="50 Shades of Klugscheißerei Band 8" loading="lazy"><div class="bcard-ov"><span>Band 8</span></div></a></div>
+<div class="klug-row fi"><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Tierwelt-Toilette/dp/B0G5GMP3MC/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 9"><img src="bilder/Foto_02_01_26__16_21_41__13_.jpg" alt="50 Shades of Klugscheißerei Band 9" loading="lazy"><div class="bcard-ov"><span>Band 9</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Trinken-Toilette/dp/B0G3KR62D5/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 10"><img src="bilder/Foto_02_01_26__16_21_41__7_.jpg" alt="50 Shades of Klugscheißerei Band 10" loading="lazy"><div class="bcard-ov"><span>Band 10</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G3KZNV3S/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 11"><img src="bilder/Foto_02_01_26__16_21_41__11_.jpg" alt="50 Shades of Klugscheißerei Band 11" loading="lazy"><div class="bcard-ov"><span>Band 11</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G4VSSVK8/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 12"><img src="bilder/Foto_02_01_26__16_21_41__9_.jpg" alt="50 Shades of Klugscheißerei Band 12" loading="lazy"><div class="bcard-ov"><span>Band 12</span></div></a></div>
+<div class="klug-row fi"><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G4LKTZRK/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 13"><img src="bilder/Foto_02_01_26__16_21_41__8_.jpg" alt="50 Shades of Klugscheißerei Band 13" loading="lazy"><div class="bcard-ov"><span>Band 13</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Fu%C3%9Fball-Toilette/dp/B0G3PDZ2KY/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 14"><img src="bilder/Foto_02_01_26__16_21_41__7___1_.jpg" alt="50 Shades of Klugscheißerei Band 14" loading="lazy"><div class="bcard-ov"><span>Band 14</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G524HHWN/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 15"><img src="bilder/Foto_02_01_26__16_21_41__6_.jpg" alt="50 Shades of Klugscheißerei Band 15" loading="lazy"><div class="bcard-ov"><span>Band 15</span></div></a><a href="https://www.amazon.de/SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Fakten-Toilette/dp/B0G33NPG1N/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 16"><img src="bilder/Foto_02_01_26__16_21_41__5_.jpg" alt="50 Shades of Klugscheißerei Band 16" loading="lazy"><div class="bcard-ov"><span>Band 16</span></div></a></div>
+<div class="klug-row fi"><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G4RT8FRB/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 17"><img src="bilder/Foto_02_01_26__16_21_41__10_.jpg" alt="50 Shades of Klugscheißerei Band 17" loading="lazy"><div class="bcard-ov"><span>Band 17</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-Medizin-Toilette/dp/B0G3PFBV9W/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 18"><img src="bilder/Foto_02_01_26__16_21_41__10___1_.jpg" alt="50 Shades of Klugscheißerei Band 18" loading="lazy"><div class="bcard-ov"><span>Band 18</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G4RT8FRB/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 19"><img src="bilder/Foto_02_01_26__16_21_41__18_.jpg" alt="50 Shades of Klugscheißerei Band 19" loading="lazy"><div class="bcard-ov"><span>Band 19</span></div></a><a href="https://www.amazon.de/50-SHADES-KLUGSCHEISSEREI-unn%C3%BCtze-Toilette/dp/B0G524HHWN/" target="_blank" rel="noopener" class="bcard fi" aria-label="50 Shades of Klugscheißerei Band 20"><img src="bilder/Foto_02_01_26__16_21_41__6___1_.jpg" alt="50 Shades of Klugscheißerei Band 20" loading="lazy"><div class="bcard-ov"><span>Band 20</span></div></a></div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: Bewertungsbücher -->
+<section class="bsec" id="s-bewert">
+  <div class="bsec-inner">
+    <div class="fi">
+      <span class="sec-eye">Rating Book Collection</span>
+      <span class="sec-head">Bewertungsbücher</span>
+      <span class="sec-claim">Rate it, live it.</span>
+      <div class="ndiv"></div>
+    </div>
+    <div class="bewert-grid">
+<div class="bewert-row quad fi"><a href="https://www.amazon.de/Das-G%C3%A4stezimmer-Gutachten-Schlafkomfort-Gastgeberqualit%C3%A4t-Bewertungs-Manufaktur/dp/B0G5WFRPTG/" target="_blank" rel="noopener" class="bcard fi" aria-label="Das Gästezimmer-Gutachten"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_49_44.png" alt="Das Gästezimmer-Gutachten" loading="lazy"><div class="bcard-ov"><span>Das Gästezimmer-Gutachten</span></div></a><a href="https://www.amazon.de/Joint-Report-inoffizielle-Couch-Abenteuer-Crew-Momente-Bewertungs-Manufaktur/dp/B0G5XJZFB2/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Joint-Report (Amazon Edition)"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_51_28.png" alt="Der Joint-Report (Amazon Edition)" loading="lazy"><div class="bcard-ov"><span>Der Joint-Report (Amazon Edition)</span></div></a><a href="https://www.amazon.de/WC-Gutachten-Bewertungsbuch-Toilettengang-Badezimmer-Erlebnis-Bewertungs-Manufaktur/dp/B0G5XRG925/" target="_blank" rel="noopener" class="bcard fi" aria-label="Das WC-Gutachten"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_52_38.png" alt="Das WC-Gutachten" loading="lazy"><div class="bcard-ov"><span>Das WC-Gutachten</span></div></a><a href="https://www.amazon.de/Grill-Report-Grillkompetenz-Hitze-Management-Fleischqualit%C3%A4t-Bewertungs-Manufaktur/dp/B0G64TSFQ7/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Grill-Report"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_50_03.png" alt="Der Grill-Report" loading="lazy"><div class="bcard-ov"><span>Der Grill-Report</span></div></a></div>
+<div class="bewert-row quad fi"><a href="https://www.amazon.de/Party-Report-Gastgeberleistung-protokollieren-Bibliothek-Bewertungs-Manufaktur/dp/B0G62MHNP4/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Party-Report"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_56_04.png" alt="Der Party-Report" loading="lazy"><div class="bcard-ov"><span>Der Party-Report</span></div></a><a href="https://www.amazon.de/Dinner-Report-Gastgeberqualit%C3%A4t-Tischmanieren-Bibliothek-Bewertungs-Manufaktur/dp/B0G5WYJGGR/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Dinner-Report"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_50_44.png" alt="Der Dinner-Report" loading="lazy"><div class="bcard-ov"><span>Der Dinner-Report</span></div></a><a href="https://www.amazon.de/Spieleabend-Report-Ausraster-Regeltreue-Bibliothek-Bewertungs-Manufaktur/dp/B0G63W9S13/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Spieleabend"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_50_24.png" alt="Der Spieleabend" loading="lazy"><div class="bcard-ov"><span>Der Spieleabend</span></div></a><a href="https://www.amazon.de/Das-Haustier-Protokoll-St%C3%B6rfaktoren-dokumentieren-Bewertungs-Manufaktur/dp/B0G5Y3ZD99/" target="_blank" rel="noopener" class="bcard fi" aria-label="Das Haustier-Protokoll"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_51_45.png" alt="Das Haustier-Protokoll" loading="lazy"><div class="bcard-ov"><span>Das Haustier-Protokoll</span></div></a></div>
+<div class="bewert-row tri fi"><a href="https://www.amazon.de/Beifahrer-Report-Bewertungsbuch-Beifahrer-Analyse-Fahrverhalten-Bewertungs-Manufaktur/dp/B0G5P4S5QH/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Beifahrer-Report"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_49_16.png" alt="Der Beifahrer-Report" loading="lazy"><div class="bcard-ov"><span>Der Beifahrer-Report</span></div></a><a href="https://www.amazon.de/Kindergeburtstags-Report-Organisation-Durchhalteverm%C3%B6gen-Kindrgeburtstages-Bewertungs-Manufaktur/dp/B0G5NJDNBK/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Kindergeburtstags-Report"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_52_20.png" alt="Der Kindergeburtstags-Report" loading="lazy"><div class="bcard-ov"><span>Der Kindergeburtstags-Report</span></div></a><a href="https://www.amazon.de/Joint-Report-Bewertungsbuch-Session-Erlebnisse-Gespr%C3%A4chsverlauf-Bewertungs-Manufaktur/dp/B0G63QN9J6/" target="_blank" rel="noopener" class="bcard fi" aria-label="Der Joint-Report (Shop Edition)"><img src="bilder/Bildschirmfoto_2025-12-09_um_12_52_04.png" alt="Der Joint-Report (Shop Edition)" loading="lazy"><div class="bcard-ov"><span>Der Joint-Report (Shop Edition)</span></div></a></div>
+</div>
+  </div>
+</section>
+
+<!-- SECTION 4: Burg Königstein -->
+<section class="bsec" id="s-burg">
+  <div class="bsec-inner">
+    <div class="fi">
+      <span class="sec-eye">Children's Book Series</span>
+      <span class="sec-head">Abenteuer auf Burg Königstein</span>
+      <span class="sec-claim">Read it, live it.</span>
+      <div class="ndiv"></div>
+    </div>
+    <div class="burg-grid">
+<div class="burg-row solo fi"><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-Pilotbuch/dp/B0GCVRSXPX/" target="_blank" rel="noopener" class="bcard" aria-label="Pilotbuch: Als alles begann"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__Pilot.jpg" alt="Pilotbuch: Als alles begann" loading="lazy"><div class="bcard-ov"><span>Pilotbuch: Als alles begann</span></div></a></div>
+<div class="burg-row tri fi"><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-Kinderbuchreihe/dp/B0G8Y6TLQ6/" target="_blank" rel="noopener" class="bcard" aria-label="Band 1: Das Geheimnis des Turms"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__Teil_1.jpg" alt="Band 1: Das Geheimnis des Turms" loading="lazy"><div class="bcard-ov"><span>Band 1: Das Geheimnis des Turms</span></div></a><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-verborgenes/dp/B0GBVTMZZJ/" target="_blank" rel="noopener" class="bcard" aria-label="Band 2: Der erste Kristall"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__Teil_2.jpg" alt="Band 2: Der erste Kristall" loading="lazy"><div class="bcard-ov"><span>Band 2: Der erste Kristall</span></div></a><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-Mondlicht/dp/B0GBVH96BF/" target="_blank" rel="noopener" class="bcard" aria-label="Band 3: Mondlicht"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__teil_3.jpg" alt="Band 3: Mondlicht" loading="lazy"><div class="bcard-ov"><span>Band 3: Mondlicht</span></div></a></div>
+<div class="burg-row tri fi"><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-Burgabenteuer/dp/B0GCDR91LT/" target="_blank" rel="noopener" class="bcard" aria-label="Band 4: Das vertauschte Amulett"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__Teil_4.jpg" alt="Band 4: Das vertauschte Amulett" loading="lazy"><div class="bcard-ov"><span>Band 4: Das vertauschte Amulett</span></div></a><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-Burgabenteuer/dp/B0GCNFBPB6/" target="_blank" rel="noopener" class="bcard" aria-label="Band 5: Der verborgene Weg"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__Teil_5.jpg" alt="Band 5: Der verborgene Weg" loading="lazy"><div class="bcard-ov"><span>Band 5: Der verborgene Weg</span></div></a><a href="https://www.amazon.de/Abenteuer-auf-Burg-K%C3%B6nigstein-Verantwortung/dp/B0GHWB61XD/" target="_blank" rel="noopener" class="bcard" aria-label="Band 6: Der Burgwächter"><img src="bilder/Tirel_Burg_Ko_nigstein_Real__Teil_6.jpg" alt="Band 6: Der Burgwächter" loading="lazy"><div class="bcard-ov"><span>Band 6: Der Burgwächter</span></div></a></div>
+</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="ft-logo">50 Shades of Spray</span>
+  <span class="ft-claim">Color it, read it, rate it, live it!</span>
+  <a href="https://www.amazon.de/stores/Marcus-Venicius/author/B0G5BD22NG" target="_blank" class="ft-amz" aria-label="Amazon Shop">
+    <svg class="amz-svg" viewBox="0 0 603 185" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#FF9900">
+        <path d="M340 140c-30 18-74 28-112 28-53 0-101-20-137-52-3-2 0-5 3-3 40 23 89 37 140 37 34 0 72-7 107-22 5-2 9 3 4 6z"/>
+        <path d="M354 128c-4-5-27-2-37-1-3 0-4-2-1-4 18-13 47-9 51-5 4 4 0 32-18 46-3 2-5 1-4-2 4-10 12-29 9-34z"/>
+      </g>
+      <g fill="#FF9900">
+        <path d="M161 93H131c-2 0-3-2-3-4V15c0-2 1-4 3-4h29c2 0 3 2 3 4v16c7-14 18-22 34-22 16 0 26 8 33 22 8-14 20-22 36-22 11 0 23 4 30 13 8 10 6 25 6 38v73c0 2-1 4-3 4h-29c-2 0-3-2-3-4V63c0-14 2-36-15-36-16 0-17 21-17 36v60c0 2-1 4-3 4h-29c-2 0-3-2-3-4V63c0-14 2-36-15-36-17 0-16 22-16 36v60c0 2-1 4-3 4z"/>
+        <path d="M420 7c36 0 55 31 55 71 0 39-22 69-55 69-34 0-54-31-54-70 0-40 20-70 54-70zm0 26c-18 0-19 24-19 39s0 46 19 46c18 0 19-26 19-42 0-10 0-22-4-31-3-8-9-12-15-12z"/>
+        <path d="M514 93h-29c-2 0-3-2-3-4V15c0-2 1-4 3-4h27c2 0 3 2 3 4v17c7-15 17-24 34-24 12 0 23 4 29 16 6-12 17-16 29-16 9 0 19 4 25 13 7 8 6 22 6 33v75c0 2-1 4-3 4h-29c-2 0-3-2-3-4V62c0-14 2-35-15-35-15 0-17 21-17 35v60c0 2-1 4-3 4h-29c-2 0-3-2-3-4V62c0-14 2-35-15-35-17 0-16 21-16 35v60c0 2-1 4-3 4z"/>
+        <path d="M268 65c0 10 0 20-5 29-5 7-12 11-20 11-11 0-17-9-17-21 0-23 21-27 42-27v8zm29 70c-2 2-4 2-6 0-8-7-10-10-14-16-13 14-22 18-39 18-20 0-35-12-35-37 0-20 11-33 27-39 14-5 33-6 47-8v-3c0-7 1-14-3-19-4-4-10-6-16-6-11 0-20 5-22 16 0 2-2 4-4 3l-27-3c-2 0-4-2-3-4 6-32 34-41 60-41 13 0 31 4 41 14 13 11 12 27 12 44v40c0 12 5 18 10 24 2 2 2 4 0 5l-28 23z"/>
+        <path d="M51 65c0 10 0 20-5 29-5 7-12 11-20 11-11 0-17-9-17-21 0-23 21-27 42-27v8zm29 70c-2 2-4 2-6 0-8-7-10-10-14-16-13 14-22 18-40 18-20 0-34-12-34-37 0-20 10-33 27-39 13-5 33-6 47-8v-3c0-7 1-14-3-19-4-4-10-6-16-6-11 0-20 5-22 16 0 2-2 4-4 3L8 81c-2 0-4-2-3-4C11 45 39 36 65 36c13 0 31 4 41 14 13 11 12 27 12 44v40c0 12 5 18 10 24 2 2 2 4 0 5L100 163z"/>
+        <path d="M97 93H68c-2 0-3-2-3-4V15c0-2 1-3 3-3h27c2 0 3 1 3 3v17c6-15 18-24 33-24 12 0 21 4 27 14 6 10 5 26 5 38v73c0 2-1 4-3 4h-29c-2 0-3-2-3-4V62c0-14 1-35-16-35-6 0-11 4-15 10-4 7-4 16-4 25v61c0 2-1 4-3 4z"/>
+      </g>
+    </svg>
+  </a>
+  <span class="ft-copy">&copy; 50 Shades of Spray — All rights reserved</span>
+  <div class="impressum">
+    <span class="imp-t">Impressum</span>
+    CSR GmbH<br>Am Forsthaus 31<br>63263 Neu-Isenburg
+  </div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur');
+const RC=['#ff2ddc','#ff6b6b','#ff9a3c','#ffd93d','#6bcb77','#00e5ff','#4d96ff','#c77dff'];
+let px=null,py=null,ci=0;
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  if(px===null){px=e.clientX;py=e.clientY;return;}
+  const dx=e.clientX-px,dy=e.clientY-py,d=Math.sqrt(dx*dx+dy*dy);
+  if(d<5)return;
+  const angle=Math.atan2(dy,dx)*180/Math.PI,col=RC[ci%RC.length];ci++;
+  const th=Math.min(d*0.45,16),s=document.createElement('div');
+  s.className='rseg';
+  s.style.cssText=`left:${px}px;top:${py-th/2}px;width:${d}px;height:${th}px;background:${col};transform:rotate(${angle}deg);box-shadow:0 0 ${th*2}px ${col};`;
+  document.body.appendChild(s);setTimeout(()=>s.remove(),550);
+  px=e.clientX;py=e.clientY;
+});
+
+// Coloring Books Platzhalter
+const g=document.getElementById('g-spray');
+for(let i=1;i<=80;i++){
+  const c=document.createElement('div');c.className='bcard fi';
+  c.style.transitionDelay=`${(i%16)*0.03}s`;
+  c.innerHTML=`<div class="ph"><span class="ph-n">${String(i).padStart(2,'0')}</span><span class="ph-t">Cover</span></div><div class="bcard-ov"><span>50 Shades of Spray #${String(i).padStart(2,'0')}</span></div>`;
+  g.appendChild(c);
+}
+
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:0.07});
+setTimeout(()=>document.querySelectorAll('.fi').forEach(el=>io.observe(el)),80);
+</script>
+</body>
+</html>
